@@ -1,17 +1,17 @@
-/*
 package com.example.invygo.controller;
 
-import com.javatechie.api.dto.UserRequest;
-import com.javatechie.api.entity.User;
-import com.javatechie.api.exception.UserNotFoundException;
-import com.javatechie.api.service.UserService;
+import com.example.invygo.dto.UserRequest;
+import com.example.invygo.entity.User;
+import com.example.invygo.exception.UserNotFoundException;
+import com.example.invygo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/users")
@@ -35,4 +35,3 @@ public class UserController {
         return ResponseEntity.ok(service.getUser(id));
     }
 }
-*/

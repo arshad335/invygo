@@ -2,6 +2,7 @@ package com.example.invygo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,5 +22,5 @@ public class User {
     private String gender;
     private int age;
     private String nationality;
-    private UserRole userRole;
+    //private UserRole userRole;
 }

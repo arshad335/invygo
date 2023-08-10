@@ -2,6 +2,7 @@ package com.example.invygo.service;
 
 import com.example.invygo.dto.UserRequest;
 import com.example.invygo.entity.User;
+import com.example.invygo.exception.UserNotFoundException;
 import com.example.invygo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,9 @@ public class UserService {
 
 
     public User saveUser(UserRequest userRequest) {
-        User user = new User(userRequest.g)
-
+        User user = User.build(0, userRequest.getName(), userRequest.getEmail(), userRequest.getMobile(), userRequest.getGender(), userRequest.getAge(),
+        userRequest.getNationality());
+        return repository.save(user);
 
     }
 
