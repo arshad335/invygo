@@ -5,6 +5,14 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb
 
-
 server:
   port: 9292
+
+#management:
+#  server:
+#    port: 9291
+#  endpoints:
+#    web:
+#      exposure:
+#        include: openapi, swaggerui
+

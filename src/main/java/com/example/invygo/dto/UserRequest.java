@@ -12,15 +12,9 @@ import lombok.NoArgsConstructor;
 public class UserRequest {
     @NotNull(message = "username shouldn't be null")
     private String name;
-    @Email(message = "invalid email address")
-    private String email;
-    @Pattern(regexp = "^\\d{10}$",message = "invalid mobile number entered ")
-    private String mobile;
-    private String gender;
-    @Min(18)
-    @Max(60)
-    private int age;
+    @NotNull
+    private String password;
     @NotBlank
-    private String nationality;
+    private String userRole;
 
 }

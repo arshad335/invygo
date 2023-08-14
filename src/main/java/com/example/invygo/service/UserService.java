@@ -16,12 +16,10 @@ public class UserService {
     private UserRepository repository;
 
 
-    public User saveUser(UserRequest userRequest) {
-        User user = User.build(0, userRequest.getName(), userRequest.getEmail(), userRequest.getMobile(), userRequest.getGender(), userRequest.getAge(),
-        userRequest.getNationality());
+ /*   public User saveUser(UserRequest userRequest) {
+        User user = User.build(0, userRequest.getName(),userRequest.getPassword(), userRequest.getUserRole());
         return repository.save(user);
-
-    }
+    }*/
 
 
     public List<User> getALlUsers() {
@@ -29,12 +27,12 @@ public class UserService {
     }
 
 
-    public User getUser(int id) throws UserNotFoundException {
+   /* public User getUser(int id) throws UserNotFoundException {
         User user= repository.findByUserId(id);
         if(user!=null){
             return user;
         }else{
             throw new UserNotFoundException("user not found with id : "+id);
         }
-    }
+    }*/
 }
