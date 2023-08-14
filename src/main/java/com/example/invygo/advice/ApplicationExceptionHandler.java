@@ -1,5 +1,6 @@
 package com.example.invygo.advice;
 
+import com.example.invygo.exception.ScheduleNotFoundException;
 import com.example.invygo.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,6 +28,14 @@ public class ApplicationExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(UserNotFoundException.class)
     public Map<String, String> handleBusinessException(UserNotFoundException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", ex.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ScheduleNotFoundException.class)
+    public Map<String, String> handleBusinessException(ScheduleNotFoundException ex) {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("errorMessage", ex.getMessage());
         return errorMap;

@@ -1,7 +1,9 @@
 package com.example.invygo.service;
 
 import com.example.invygo.dto.UserRequest;
+import com.example.invygo.entity.Schedule;
 import com.example.invygo.entity.User;
+import com.example.invygo.exception.ScheduleNotFoundException;
 import com.example.invygo.exception.UserNotFoundException;
 import com.example.invygo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,24 @@ public class UserService {
             return user;
         }else{
             throw new UserNotFoundException("User not found with id : "+id);
+        }
+    }
+
+    public User updateUser(int id, UserRequest userRequest) throws UserNotFoundException {
+        deleteUser(id);
+        User user = User.build(id, userRequest.getName(),userRequest.getPassword(),true , userRequest.getRoles());
+    return repository.save(user);
+    }
+
+    public boolean deleteUser(int id) throws UserNotFoundException {
+        User user = repository.findById(id);
+
+        if(user != null){
+            repository.delete(user);
+            return true;
+        }
+        else {
+            throw new UserNotFoundException("User Not Found with id :"+ id);
         }
     }
 

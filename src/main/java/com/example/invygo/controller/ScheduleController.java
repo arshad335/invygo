@@ -34,7 +34,6 @@ public class ScheduleController {
     }
 
 
-
     /*@GetMapping("/{id}")
     public ResponseEntity<Schedule> getScheduleByUserId(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(scheduleService.getScheduleByUserId());
