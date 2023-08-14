@@ -1,9 +1,13 @@
 package com.example.invygo.dto;
 
-import jakarta.validation.constraints.*;
+import com.example.invygo.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -14,7 +18,6 @@ public class UserRequest {
     private String name;
     @NotNull
     private String password;
-    @NotBlank
-    private String userRole;
+    private Set<Role> roles = new HashSet<>();
 
 }

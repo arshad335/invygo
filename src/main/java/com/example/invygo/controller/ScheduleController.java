@@ -2,13 +2,14 @@ package com.example.invygo.controller;
 
 import com.example.invygo.dto.ScheduleRequest;
 import com.example.invygo.entity.Schedule;
+import com.example.invygo.exception.ScheduleNotFoundException;
 import com.example.invygo.service.ScheduleService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,11 @@ public class ScheduleController {
     @GetMapping("/fetchAll")
     public ResponseEntity<List<Schedule>> getAllSchedule(){
         return ResponseEntity.ok(scheduleService.getAllSchedule());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteSchedule(@PathVariable int id) throws ScheduleNotFoundException {
+        return scheduleService.deleteSchedule(id);
     }
 
 

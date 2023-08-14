@@ -6,7 +6,7 @@ spring:
     url: jdbc:h2:mem:testdb
 
 server:
-  port: 9292
+  port: 9290
 
 #management:
 #  server:

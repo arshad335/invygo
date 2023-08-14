@@ -16,11 +16,10 @@ public class UserService {
     private UserRepository repository;
 
 
- /*   public User saveUser(UserRequest userRequest) {
-        User user = User.build(0, userRequest.getName(),userRequest.getPassword(), userRequest.getUserRole());
+    public User saveUser(UserRequest userRequest) {
+        User user = User.build(0, userRequest.getName(),userRequest.getPassword(),true , userRequest.getRoles());
         return repository.save(user);
-    }*/
-
+    }
 
     public List<User> getALlUsers() {
         return repository.findAll();

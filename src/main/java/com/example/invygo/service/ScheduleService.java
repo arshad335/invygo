@@ -2,6 +2,8 @@ package com.example.invygo.service;
 
 import com.example.invygo.dto.ScheduleRequest;
 import com.example.invygo.entity.Schedule;
+import com.example.invygo.exception.ScheduleNotFoundException;
+import com.example.invygo.exception.UserNotFoundException;
 import com.example.invygo.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,19 @@ public class ScheduleService {
             throw new UserNotFoundException("user not found with id : "+id);
         }
     }*/
+
+    public String deleteSchedule(int id) throws ScheduleNotFoundException {
+
+        Schedule schedule = repository.findScheduleById(id);
+
+        if(schedule != null){
+            repository.delete(schedule);
+            return "Schedule Deleted with Id : "+id;
+        }
+        else {
+            throw new ScheduleNotFoundException("Schedule Not Found with id :"+ id);
+        }
+
+                }
 
 }
