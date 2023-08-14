@@ -1,3 +1,4 @@
+/*
 package com.example.invygo.service;
 
 import com.example.invygo.entity.Role;
@@ -76,3 +77,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new InMemoryUserDetailsManager(new MyUserDetails(user));
 	}
 }
+*/

@@ -25,11 +25,16 @@ public class UserController {
 
     @GetMapping("/fetchAll")
     public ResponseEntity<List<User>> getAllUsers(){
-        return ResponseEntity.ok(service.getALlUsers());
+        return ResponseEntity.ok(service.getAllUsers());
     }
 
-/*    @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(service.getUser(id));
+    }
+
+   /* @GetMapping("/{role}")
+    public ResponseEntity<List<User>> getUserByRole(@PathVariable String role) throws UserNotFoundException {
+        return ResponseEntity.ok(service.getUserByRole(role));
     }*/
 }

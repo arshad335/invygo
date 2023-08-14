@@ -1,3 +1,4 @@
+/*
 package com.example.invygo.service;
 
 import com.example.invygo.entity.Role;
@@ -62,3 +63,4 @@ public class MyUserDetails implements UserDetails {
 	}
 
 }
+*/

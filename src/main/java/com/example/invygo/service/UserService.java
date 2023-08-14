@@ -20,18 +20,26 @@ public class UserService {
         User user = User.build(0, userRequest.getName(),userRequest.getPassword(),true , userRequest.getRoles());
         return repository.save(user);
     }
-
-    public List<User> getALlUsers() {
+    public List<User> getAllUsers() {
         return repository.findAll();
     }
 
 
-   /* public User getUser(int id) throws UserNotFoundException {
-        User user= repository.findByUserId(id);
+    public User getUser(int id) throws UserNotFoundException {
+        User user= repository.findById(id);
         if(user!=null){
             return user;
         }else{
-            throw new UserNotFoundException("user not found with id : "+id);
+            throw new UserNotFoundException("User not found with id : "+id);
+        }
+    }
+
+    /*public List<User> getUserByRole(String role) throws UserNotFoundException {
+        List<User> user= repository.findByRole(role);
+        if(user!=null){
+            return user;
+        }else{
+            throw new UserNotFoundException("No user with the role: "+role);
         }
     }*/
 }
