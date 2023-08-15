@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("SELECT u FROM User u WHERE u.username = :username")
     public User getUserByUsername(@Param("username") String username);
 
-    /*@Query( "select u from User u inner join u.roles r where r.name = :role" )
-    List<User> findBySpecificRole(@Param("roles") String role);*/
+    @Query( "select u from User u inner join u.roles r where r.name = :role" )
+    List<User> findBySpecificRole(@Param("role") String role);
 }

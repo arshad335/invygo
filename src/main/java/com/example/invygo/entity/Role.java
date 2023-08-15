@@ -6,12 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "ROLES_TBL")
 @Data
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
-public class Role {
+public class Role implements Serializable {
 	@Id
 	@Column(name = "role_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

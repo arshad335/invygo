@@ -51,8 +51,8 @@ public class UserController {
         return new ResponseEntity<String>(error,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-   /* @GetMapping("/{role}")
+    @GetMapping("/role/{role}")
     public ResponseEntity<List<User>> getUserByRole(@PathVariable String role) throws UserNotFoundException {
         return ResponseEntity.ok(service.getUserByRole(role));
-    }*/
+    }
 }

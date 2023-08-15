@@ -54,12 +54,12 @@ public class UserService {
         }
     }
 
-    /*public List<User> getUserByRole(String role) throws UserNotFoundException {
-        List<User> user= repository.findByRole(role);
+    public List<User> getUserByRole(String role) throws UserNotFoundException {
+        List<User> user= repository.findBySpecificRole(role);
         if(user!=null){
             return user;
         }else{
             throw new UserNotFoundException("No user with the role: "+role);
         }
-    }*/
+    }
 }
