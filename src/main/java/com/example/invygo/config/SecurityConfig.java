@@ -43,7 +43,7 @@ public class SecurityConfig {
                         auth ->
                                 auth.requestMatchers("/api/v1/user/signup")
                                         .permitAll()
-                                        .requestMatchers("/api-docs")
+                                        .requestMatchers("/api-docs.yaml")
                                         .permitAll().
                                         requestMatchers("/swagger-ui/**")
                                         .permitAll()
