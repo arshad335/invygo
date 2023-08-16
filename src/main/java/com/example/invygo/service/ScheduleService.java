@@ -16,11 +16,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
     @Autowired
     private ScheduleRepository repository;
+
+    @Autowired
+    private UserService userService;
 
     public Schedule saveSchedule(ScheduleRequest scheduleRequest) {
         Schedule schedule = Schedule.build(0, scheduleRequest.getWorkDate(), scheduleRequest.getUser(), scheduleRequest.getShiftLength());
@@ -59,33 +63,22 @@ public class ScheduleService {
             throw new ScheduleNotFoundException("Schedule Not Found with id :"+ id);
         }
     }
-
-    public Map<String, Float> orderUserNameByHrs(int days){
-
-
-
-        Map<String, Float> result = new HashMap<>();
-
+    public Map<String, Float> getUserTotalShiftLengthsSorted(int days) {
+        List<Schedule> allSchedules = repository.findAll();
         LocalDate enddate = LocalDate.now();
         LocalDate startDate = enddate.minusDays(days);
 
-        for(String user : map.keySet()){
-            result.put(user, (float) map.get(user).stream().filter(date -> date.getWorkDate().isAfter(startDate) && date.getWorkDate().isBefore(enddate))
-                    .map(scheduleV1 -> scheduleV1.getShiftLength()).mapToDouble(Float::floatValue).sum());
-        }
+        Map<String, Float> userTotalShiftLengths = allSchedules.stream()
+                .filter(date -> date.getWorkDate().isAfter(startDate) && date.getWorkDate().isBefore(enddate))
+                .collect(Collectors.groupingBy(schedule -> schedule.getUser().getUsername(),
+                        Collectors.summingDouble(Schedule::getShiftLength)))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue()) // Sort by values (total shift lengths)
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().floatValue(),
+                        (e1, e2) -> e1, LinkedHashMap::new)); // Maintain order in a LinkedHashMap
 
-        LinkedHashMap<String, Float> sortedHashMap = result.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(
-                        LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey(), entry.getValue()),
-                        LinkedHashMap::putAll
-                );
-
-        return sortedHashMap;
-
+        return userTotalShiftLengths;
     }
-
     @Transactional
     public void deleteOldData() {
         LocalDate cutoffDate = LocalDate.now().minusDays(365);

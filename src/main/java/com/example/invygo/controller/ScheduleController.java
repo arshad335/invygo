@@ -52,8 +52,9 @@ public class ScheduleController {
     }
 
     @GetMapping("/getAll/{days}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Float>> getAllScheduleOrdered(@PathVariable int days){
-        return ResponseEntity.ok(scheduleService.orderUserNameByHrs(days));
+        return ResponseEntity.ok(scheduleService.getUserTotalShiftLengthsSorted(days));
     }
 
     @DeleteMapping("/delete/{id}")

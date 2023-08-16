@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,38 +18,42 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-  @Autowired
-  UserDetailsServiceImpl userDetailsServiceImpl;
+    @Autowired
+    UserDetailsServiceImpl userDetailsServiceImpl;
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(userDetailsServiceImpl);
-    authProvider.setPasswordEncoder(passwordEncoder());
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsServiceImpl);
+        authProvider.setPasswordEncoder(passwordEncoder());
 
-    return authProvider;
-  }
+        return authProvider;
+    }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(csrf -> csrf.disable())
-        .httpBasic(Customizer.withDefaults())
-        .authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers("/api/v1/user/signup")
-                    .permitAll()
-                    .requestMatchers("/api/v1/user/getAll")
-                    .authenticated()
-                        .requestMatchers("/api/v1/user/fetchAll")
-                        .authenticated()
-                    .anyRequest()
-                    .authenticated())
-        .cors(cors -> cors.disable())
-        .build();
-  }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(csrf -> csrf.disable())
+                .httpBasic(Customizer.withDefaults())
+                .authorizeHttpRequests(
+                        auth ->
+                                auth.requestMatchers("/api/v1/user/signup")
+                                        .permitAll()
+                                        .requestMatchers("/api-docs")
+                                        .permitAll().
+                                        requestMatchers("/swagger-ui/**")
+                                        .permitAll()
+                                        .requestMatchers("/api/v1/user/**")
+                                        .authenticated()
+                                        .requestMatchers("/api/v1/schedule/**")
+                                        .authenticated()
+                                        .anyRequest()
+                                        .authenticated())
+                .cors(cors -> cors.disable())
+                .build();
+    }
 }
