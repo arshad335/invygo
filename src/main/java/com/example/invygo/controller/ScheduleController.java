@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/schedule")
@@ -48,6 +49,11 @@ public class ScheduleController {
     @PreAuthorize("hasRole('ADMIN') or (hasRole('USER') and #username == principal.username)")
     public List<Schedule> getSchedulesByUsername(@RequestParam String username, Principal principal) throws ScheduleNotFoundException {
         return scheduleService.getScheduleByName(username);
+    }
+
+    @GetMapping("/getAll/{days}")
+    public ResponseEntity<Map<String, Float>> getAllScheduleOrdered(@PathVariable int days){
+        return ResponseEntity.ok(scheduleService.orderUserNameByHrs(days));
     }
 
     @DeleteMapping("/delete/{id}")

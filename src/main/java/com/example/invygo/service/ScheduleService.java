@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScheduleService {
@@ -55,6 +58,32 @@ public class ScheduleService {
         else {
             throw new ScheduleNotFoundException("Schedule Not Found with id :"+ id);
         }
+    }
+
+    public Map<String, Float> orderUserNameByHrs(int days){
+
+
+
+        Map<String, Float> result = new HashMap<>();
+
+        LocalDate enddate = LocalDate.now();
+        LocalDate startDate = enddate.minusDays(days);
+
+        for(String user : map.keySet()){
+            result.put(user, (float) map.get(user).stream().filter(date -> date.getWorkDate().isAfter(startDate) && date.getWorkDate().isBefore(enddate))
+                    .map(scheduleV1 -> scheduleV1.getShiftLength()).mapToDouble(Float::floatValue).sum());
+        }
+
+        LinkedHashMap<String, Float> sortedHashMap = result.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(
+                        LinkedHashMap::new,
+                        (map, entry) -> map.put(entry.getKey(), entry.getValue()),
+                        LinkedHashMap::putAll
+                );
+
+        return sortedHashMap;
+
     }
 
     @Transactional
