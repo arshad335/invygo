@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.security.Principal;
 import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user")
@@ -31,18 +33,15 @@ public class UserController {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
-    @GetMapping("/fetchAll")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<User>> fetchAll(){
-        return ResponseEntity.ok(service.getAllUsers());
-    }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUser(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(service.getUser(id));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> updateUser(@PathVariable("id") int id, @RequestBody @Valid UserRequest userRequest) throws UserNotFoundException {
 
         User user = service.updateUser(id, userRequest);
@@ -50,6 +49,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteUser(@PathVariable("id") int id) throws UserNotFoundException {
         boolean isDeleted = service.deleteUser(id);
         if(isDeleted){
@@ -61,6 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/role/{role}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<User>> getUserByRole(@PathVariable String role) throws UserNotFoundException {
         return ResponseEntity.ok(service.getUserByRole(role));
     }

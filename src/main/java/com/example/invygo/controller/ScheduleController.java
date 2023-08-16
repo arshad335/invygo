@@ -10,18 +10,24 @@ import com.example.invygo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/schedule")
+@EnableMethodSecurity
 public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Schedule> addSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest) {
         return new ResponseEntity<>(scheduleService.saveSchedule(scheduleRequest), HttpStatus.CREATED);
     }
@@ -32,23 +38,22 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Schedule> updateSchedule(@PathVariable("id") int id, @RequestBody @Valid ScheduleRequest scheduleRequest) throws ScheduleNotFoundException {
 
         Schedule schedule = scheduleService.updateSchedule(id, scheduleRequest);
         return new ResponseEntity<Schedule>(schedule, HttpStatus.OK);
     }
     @GetMapping("/name")
-    public List<Schedule> getSchedulesByUsername(@RequestParam String username) throws ScheduleNotFoundException {
+    @PreAuthorize("hasRole('ADMIN') or (hasRole('USER') and #username == principal.username)")
+    public List<Schedule> getSchedulesByUsername(@RequestParam String username, Principal principal) throws ScheduleNotFoundException {
         return scheduleService.getScheduleByName(username);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteSchedule(@PathVariable int id) throws ScheduleNotFoundException {
         return scheduleService.deleteSchedule(id);
     }
 
-    /*@GetMapping("/{id}")
-    public ResponseEntity<Schedule> getScheduleByUserId(@PathVariable int id) throws UserNotFoundException {
-        return ResponseEntity.ok(scheduleService.getScheduleByUserId());
-    }*/
 }
