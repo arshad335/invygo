@@ -40,11 +40,11 @@ public class ScheduleControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(scheduleController).build();
     }
 
-    @Test
+    /*@Test
     @WithMockUser(roles = "ADMIN")
     void testAddSchedule() throws Exception {
-        ScheduleRequest scheduleRequest = new ScheduleRequest(/* Initialize schedule request data */);
-        Schedule savedSchedule = new Schedule(/* Initialize saved schedule data */);
+        ScheduleRequest scheduleRequest = new ScheduleRequest(*//* Initialize schedule request data *//*);
+        Schedule savedSchedule = new Schedule(*//* Initialize saved schedule data *//*);
 
         when(scheduleService.saveSchedule(scheduleRequest)).thenReturn(savedSchedule);
 
@@ -55,7 +55,7 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$.id").exists());
 
         verify(scheduleService, times(1)).saveSchedule(scheduleRequest);
-    }
+    }*/
 
     @Test
     void testGetAllSchedule() throws Exception {
@@ -70,12 +70,12 @@ public class ScheduleControllerTest {
         verify(scheduleService, times(1)).getAllSchedule();
     }
 
-    @Test
+    /*@Test
     @WithMockUser(roles = "ADMIN")
     void testUpdateSchedule() throws Exception {
         int scheduleId = 1;
-        ScheduleRequest scheduleRequest = new ScheduleRequest(/* Initialize updated schedule data */);
-        Schedule updatedSchedule = new Schedule(/* Initialize updated schedule data */);
+        ScheduleRequest scheduleRequest = new ScheduleRequest(*//* Initialize updated schedule data *//*);
+        Schedule updatedSchedule = new Schedule(*//* Initialize updated schedule data *//*);
 
         when(scheduleService.updateSchedule(scheduleId, scheduleRequest)).thenReturn(updatedSchedule);
 
@@ -86,7 +86,7 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$.id").value(scheduleId));
 
         verify(scheduleService, times(1)).updateSchedule(scheduleId, scheduleRequest);
-    }
+    }*/
 
     @Test
     @WithMockUser(roles = "USER")

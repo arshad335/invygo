@@ -14,7 +14,7 @@
 	<name>invygo</name>
 	<description>Assignment name: Staff Scheduling application Brief: Write a backend application for the staff scheduling system. Users must be able to create an account and log in. Implement 2 roles with different permission levels: Staff User: ● Can view his/her schedule for any period of time (up to 1 year) ● Can see his/her coworker schedules Admin: ● Can edit/delete all users, ● Can create/edit/delete schedule for users ● Can order users list by accumulated work hours per arbitrary period (up to 1 year) Schedule should have: ● Work date ● User ● Shift length in hours Deliverables: ● Create relevant REST endpoints that can be accessed and interacted via Postman or other similar software. ● Add Relevant unit tests. ● Create a documentation page using Open API specifications. ● Dockerize application and add README file describing how to run the project. Technologies to use: ● Please feel free to use any backend technologies for this assignment</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>20</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
