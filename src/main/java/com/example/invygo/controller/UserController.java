@@ -7,14 +7,16 @@ import com.example.invygo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user")
+@EnableMethodSecurity
 public class UserController {
-
     @Autowired
     private UserService service;
 
@@ -24,7 +26,14 @@ public class UserController {
     }
 
     @GetMapping("/getAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<User>> getAllUsers(){
+        return ResponseEntity.ok(service.getAllUsers());
+    }
+
+    @GetMapping("/fetchAll")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<User>> fetchAll(){
         return ResponseEntity.ok(service.getAllUsers());
     }
 
@@ -34,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateBook(@PathVariable("id") int id, @RequestBody @Valid UserRequest userRequest) throws UserNotFoundException {
+    public ResponseEntity<User> updateUser(@PathVariable("id") int id, @RequestBody @Valid UserRequest userRequest) throws UserNotFoundException {
 
         User user = service.updateUser(id, userRequest);
         return new ResponseEntity<User>(user, HttpStatus.OK);

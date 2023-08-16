@@ -1,13 +1,14 @@
 package com.example.invygo.dto;
 
 import com.example.invygo.entity.User;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -15,8 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class ScheduleRequest {
     @NotNull(message = "Date Cannot Be Null")
-    private Date workDate;
+    private LocalDate workDate;
     @Valid
-    private User userName;
+    private User user;
     private Float shiftLength;
 }

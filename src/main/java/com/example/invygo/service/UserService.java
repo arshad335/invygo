@@ -7,6 +7,7 @@ import com.example.invygo.exception.ScheduleNotFoundException;
 import com.example.invygo.exception.UserNotFoundException;
 import com.example.invygo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +18,12 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     public User saveUser(UserRequest userRequest) {
-        User user = User.build(0, userRequest.getName(),userRequest.getPassword(),true , userRequest.getRoles());
+        User user = User.build(0, userRequest.getName(),passwordEncoder.encode(userRequest.getPassword()),true , userRequest.getRoles());
         return repository.save(user);
     }
     public List<User> getAllUsers() {
